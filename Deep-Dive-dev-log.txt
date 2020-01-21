@@ -2,11 +2,12 @@ v player location slider bar
 	v when down arrow key is pressed, player icon goes down
 	v when player icon has reached the bottom, it does not go further down
 	v floating back to the surface
-
 v player goes down. camera follows
-- convert betwen player pos & UI pos
 
-
+v convert betwen player pos & UI pos
+v player moves right/left
+v player xpos clamp to main camera
+v bubble UI appears when underwater
 
 
 
