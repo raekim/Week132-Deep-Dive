@@ -28,7 +28,6 @@ public class Player : MonoBehaviour
     {
         Swim();
 
-
         if (Input.GetKey(KeyCode.DownArrow))
         {
             mySpriteRenderer.sprite = sprites[1];

@@ -10,11 +10,13 @@ v player xpos clamp to main camera
 v bubble UI appears when underwater
 
 v change between idle/diving down motion
-- boat waits for the cat
+v going underwater when out of camera
 
-
-
+- get treasure out of the water
+- bombs
+- bubbles
 
 
 ================================================
 - water gets darker as you dive depper down
+- boat waits for the cat
