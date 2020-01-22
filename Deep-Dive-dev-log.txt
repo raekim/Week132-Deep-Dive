@@ -9,7 +9,8 @@ v player moves right/left
 v player xpos clamp to main camera
 v bubble UI appears when underwater
 
-
+v change between idle/diving down motion
+- boat waits for the cat
 
 
 

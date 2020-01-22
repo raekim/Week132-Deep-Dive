@@ -9,21 +9,34 @@ public class Player : MonoBehaviour
     [SerializeField] float goSideSpeed = 0.5f;
     [SerializeField] float playerMinX;
     [SerializeField] float playerManX;
+    [SerializeField] Sprite[] sprites;
 
     Vector3 startPoint;
     Vector3 finishPoint;
+    SpriteRenderer mySpriteRenderer;
 
     // Start is called before the first frame update
     void Start()
     {
         startPoint = MainGame.GetInstance().startPoint.position;
         finishPoint = MainGame.GetInstance().finishPoint.position;
+        mySpriteRenderer = GetComponent<SpriteRenderer>();
     }
 
     // Update is called once per frame
     void Update()
     {
         Swim();
+
+
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            mySpriteRenderer.sprite = sprites[1];
+        }
+        else
+        {
+            mySpriteRenderer.sprite = sprites[0];
+        }
     }
 
     private void Swim()
