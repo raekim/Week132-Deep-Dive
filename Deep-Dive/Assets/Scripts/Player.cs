@@ -64,4 +64,22 @@ public class Player : MonoBehaviour
 
         transform.position = newPos;
     }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        GameObject obj = collision.gameObject;
+        if(obj.name == "Treasure")
+        {
+            // Got treasure!
+            MainGame.GetInstance().gotTreasure = true;
+            obj.transform.parent = transform;
+            obj.transform.position = transform.position + new Vector3(0, 2, 0);
+        }
+    }
+
+    public void Hit()
+    {
+        MainGame.GetInstance().DecreaseHP(20);
+        // super mode
+    }
 }

@@ -12,9 +12,16 @@ v bubble UI appears when underwater
 v change between idle/diving down motion
 v going underwater when out of camera
 
-- get treasure out of the water
+v get treasure out of the water
 - bombs
+	- bombs move in pre-set patterns
+	- move horizontal/vertival/circular
+	- speed
+	- move with code
 - bubbles
+	- bubbles float up from below(out of the camera) at random x position
+	- float up very slowly
+	- animate bubble with squishy effect
 
 
 ================================================
