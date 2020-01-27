@@ -11,6 +11,7 @@ public class Player : MonoBehaviour
     [SerializeField] float playerManX;
     [SerializeField] Sprite[] sprites;
 
+    Animator myAnimator;
     Vector3 startPoint;
     Vector3 finishPoint;
     SpriteRenderer mySpriteRenderer;
@@ -20,12 +21,25 @@ public class Player : MonoBehaviour
     {
         startPoint = MainGame.GetInstance().startPoint.position;
         finishPoint = MainGame.GetInstance().finishPoint.position;
-        mySpriteRenderer = GetComponent<SpriteRenderer>();
+        mySpriteRenderer = GetComponentInChildren<SpriteRenderer>();
+        myAnimator = GetComponent<Animator>();
     }
 
     // Update is called once per frame
     void Update()
     {
+        if (MainGame.GetInstance().gameOver)
+        {
+            // Swim up
+            Vector3 newPos = transform.position;
+            float speed = goUpSpeed;
+            newPos += new Vector3(0, speed, 0) * Time.deltaTime;
+            // Clamp player position
+            newPos.x = Mathf.Clamp(newPos.x, playerMinX, playerManX);
+            newPos.y = Mathf.Clamp(newPos.y, finishPoint.y, startPoint.y);
+            transform.position = newPos;
+            return;
+        }
         Swim();
 
         if (Input.GetKey(KeyCode.DownArrow))
@@ -80,6 +94,7 @@ public class Player : MonoBehaviour
     public void Hit()
     {
         MainGame.GetInstance().DecreaseHP(20);
+        myAnimator.SetTrigger("Hit");
         // super mode
     }
 }

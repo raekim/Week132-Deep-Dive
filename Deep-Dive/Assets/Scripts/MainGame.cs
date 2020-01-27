@@ -1,18 +1,24 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MainGame : MonoBehaviour
 {
     // Singleton
     static MainGame Instance;
     public static MainGame GetInstance() { return Instance; }
+    public bool gameWin = false;
+    public bool gameOver = false;
 
     float diveDist;   // distance from start point to finish(treasure) point
 
     [SerializeField] GameObject treasure;
     [SerializeField] GameObject waterBg;
     [SerializeField] float hpDecreasePerSec;
+    [SerializeField] GameObject winObj;
+    [SerializeField] GameObject loseObj;
+    [SerializeField] Sprite winChestSprite;
 
     // public variables
     public GameObject Player;
@@ -44,20 +50,59 @@ public class MainGame : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (Input.GetKey(KeyCode.R))
+        {
+            // reload current scene
+            Scene scene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(scene.name);
+        }
+        if (gameOver)
+        {
+            if (gameWin)
+            {
+                winObj.SetActive(true);
+                if(!isUnderWater)
+                {
+                    // win trigger ON
+                    treasure.GetComponent<SpriteRenderer>().sprite = winChestSprite;
+                }
+            }
+            else
+            {
+                Time.timeScale = 0;
+                loseObj.SetActive(true);
+            }
+        }
+
+        UpdateStatus();
+        UpdateCameraAndBackground();
+        UpdateHP();
+    }
+
+    private void UpdateStatus()
+    {
         // Update dive progress
         diveProgress = Mathf.Abs(startPoint.position.y - Player.transform.position.y) / diveDist;
         // is the player underwater?
         isUnderWater = Player.transform.position.y < -6;
+        if(!isUnderWater && gotTreasure)
+        {
+            gameOver = true;
+            gameWin = true;
+        }
+    }
 
-        UpdateCameraAndBackground();
-
+    private void UpdateHP()
+    {
         // Update hp
         if (isUnderWater)
         {
             hp -= hpDecreasePerSec * Time.deltaTime;
-            if(hp <= 0)
+            if (hp <= 0)
             {
                 hp = 0;
+                gameOver = true;
+                gameWin = false;
             }
         }
         else
@@ -104,6 +149,8 @@ public class MainGame : MonoBehaviour
         {
             hp = 0;
             // Game Over
+            gameOver = true;
+            gameWin = false;
         }
     }
 }
